@@ -1,12 +1,21 @@
 {
   "packageDirectories": [
     {
+      "versionName": "ver 0.1",
+      "versionNumber": "0.1.0.NEXT",
       "path": "force-app",
-      "default": true
+      "default": true,
+      "package": "Permset Quick Edit",
+      "versionDescription": ""
     }
   ],
   "name": "permset-quick-edit",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "62.0"
+  "sourceApiVersion": "62.0",
+  "packageAliases": {
+    "Permset Quick Edit": "0Ho6S000000GmdDSAS",
+    "Permset Quick Edit@0.1.0-1": "04t6S000001IQsoQAG",
+    "Permset Quick Edit@0.1.0-2": "04t6S000001IQstQAG"
+  }
 }
