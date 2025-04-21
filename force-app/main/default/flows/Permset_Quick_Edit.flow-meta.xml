@@ -1,50 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
-    <collectionProcessors>
-        <description>Objects local to the org</description>
-        <name>Filter_Local</name>
-        <elementSubtype>FilterCollectionProcessor</elementSubtype>
-        <label>Filter Local</label>
-        <locationX>176</locationX>
-        <locationY>242</locationY>
-        <assignNextValueToReference>currentItem_Filter_Local</assignNextValueToReference>
-        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
-        <collectionReference>Get_Entity_Defs</collectionReference>
-        <conditionLogic>and</conditionLogic>
-        <conditions>
-            <leftValueReference>currentItem_Filter_Local.NamespacePrefix</leftValueReference>
-            <operator>IsNull</operator>
-            <rightValue>
-                <booleanValue>true</booleanValue>
-            </rightValue>
-        </conditions>
-        <connector>
-            <targetReference>Filter_Packaged</targetReference>
-        </connector>
-    </collectionProcessors>
-    <collectionProcessors>
-        <description>Packaged objects from managed or unlocked packages with namespace</description>
-        <name>Filter_Packaged</name>
-        <elementSubtype>FilterCollectionProcessor</elementSubtype>
-        <label>Filter Packaged</label>
-        <locationX>176</locationX>
-        <locationY>350</locationY>
-        <assignNextValueToReference>currentItem_Filter_Custom</assignNextValueToReference>
-        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
-        <collectionReference>Get_Entity_Defs</collectionReference>
-        <conditionLogic>and</conditionLogic>
-        <conditions>
-            <leftValueReference>currentItem_Filter_Custom.NamespacePrefix</leftValueReference>
-            <operator>IsNull</operator>
-            <rightValue>
-                <booleanValue>false</booleanValue>
-            </rightValue>
-        </conditions>
-        <connector>
-            <targetReference>Select_Permset_And_Object</targetReference>
-        </connector>
-    </collectionProcessors>
     <dynamicChoiceSets>
         <name>choice_Permsets</name>
         <dataType>String</dataType>
@@ -68,16 +24,8 @@
         <valueField>Id</valueField>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>collChoice_CustomObjects</name>
-        <collectionReference>Filter_Packaged</collectionReference>
-        <dataType>String</dataType>
-        <displayField>Label</displayField>
-        <object>EntityDefinition</object>
-        <valueField>DurableId</valueField>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>collChoice_StandardObjects</name>
-        <collectionReference>Filter_Local</collectionReference>
+        <name>collChoice_sObjects</name>
+        <collectionReference>Get_Entity_Defs</collectionReference>
         <dataType>String</dataType>
         <displayField>Label</displayField>
         <object>EntityDefinition</object>
@@ -87,32 +35,38 @@
     <formulas>
         <name>formula_apexAccess</name>
         <dataType>String</dataType>
-        <expression>&quot;&lt;a style=\&quot;padding:5px\&quot; href=\&quot;/lightning/setup/PermissionSetListView/page?address=%2F&quot;&amp;{!PermissionSet.selectedChoiceValues}&amp;&quot;%2Fe%3Fs%3DClassAccess\&quot;&gt;Edit Apex Permissions&lt;/a&gt;&quot;</expression>
+        <expression
+    >&quot;&lt;a style=\&quot;padding:5px\&quot; href=\&quot;/lightning/setup/PermissionSetListView/page?address=%2F&quot;&amp;{!PermissionSet.selectedChoiceValues}&amp;&quot;%2Fe%3Fs%3DClassAccess\&quot;&gt;Edit Apex Permissions&lt;/a&gt;&quot;</expression>
     </formulas>
     <formulas>
         <name>formula_appAccess</name>
         <dataType>String</dataType>
-        <expression>&quot;&lt;a style=\&quot;padding:5px\&quot; href=\&quot;/lightning/setup/PermissionSetListView/page?address=%2F&quot;&amp;{!PermissionSet.selectedChoiceValues}&amp;&quot;%2Fe%3Fs%3DAppPermissions\&quot;&gt;Edit App Permissions&lt;/a&gt;&quot;</expression>
+        <expression
+    >&quot;&lt;a style=\&quot;padding:5px\&quot; href=\&quot;/lightning/setup/PermissionSetListView/page?address=%2F&quot;&amp;{!PermissionSet.selectedChoiceValues}&amp;&quot;%2Fe%3Fs%3DAppPermissions\&quot;&gt;Edit App Permissions&lt;/a&gt;&quot;</expression>
     </formulas>
     <formulas>
         <name>formula_customPermLink</name>
         <dataType>String</dataType>
-        <expression>&quot;&lt;a style=\&quot;padding:5px\&quot; href=\&quot;/lightning/setup/PermissionSetListView/page?address=%2F&quot;&amp;{!PermissionSet.selectedChoiceValues}&amp;&quot;%2Fe%3Fs%3DCustomPermissions\&quot;&gt;Edit Custom Permissions&lt;/a&gt;&quot;</expression>
+        <expression
+    >&quot;&lt;a style=\&quot;padding:5px\&quot; href=\&quot;/lightning/setup/PermissionSetListView/page?address=%2F&quot;&amp;{!PermissionSet.selectedChoiceValues}&amp;&quot;%2Fe%3Fs%3DCustomPermissions\&quot;&gt;Edit Custom Permissions&lt;/a&gt;&quot;</expression>
     </formulas>
     <formulas>
         <name>formula_flowAccess</name>
         <dataType>String</dataType>
-        <expression>&quot;&lt;a style=\&quot;padding:5px\&quot; href=\&quot;/lightning/setup/PermissionSetListView/page?address=%2F&quot;&amp;{!PermissionSet.selectedChoiceValues}&amp;&quot;%2Fe%3Fs%3DFlowAccess\&quot;&gt;Edit Flow Access&lt;/a&gt;&quot;</expression>
+        <expression
+    >&quot;&lt;a style=\&quot;padding:5px\&quot; href=\&quot;/lightning/setup/PermissionSetListView/page?address=%2F&quot;&amp;{!PermissionSet.selectedChoiceValues}&amp;&quot;%2Fe%3Fs%3DFlowAccess\&quot;&gt;Edit Flow Access&lt;/a&gt;&quot;</expression>
     </formulas>
     <formulas>
         <name>formula_SObjLink</name>
         <dataType>String</dataType>
-        <expression>&quot;&lt;a style=\&quot;padding: 5px\&quot; href=\&quot;/lightning/setup/PermissionSetListView/page?address=%2F&quot;&amp;{!PermissionSet.selectedChoiceValues}&amp;&quot;%2Fe%3Fs%3DEntityPermissions%26o%3D&quot;&amp;{!Object.selectedChoiceValues}&amp;&quot;\&quot;&gt;Edit Object Permissions&lt;/a&gt;&quot;</expression>
+        <expression
+    >&quot;&lt;a style=\&quot;padding: 5px\&quot; href=\&quot;/lightning/setup/PermissionSetListView/page?address=%2F&quot;&amp;{!PermissionSet.selectedChoiceValues}&amp;&quot;%2Fe%3Fs%3DEntityPermissions%26o%3D&quot;&amp;{!Object.selectedChoiceValues}&amp;&quot;\&quot;&gt;Edit Object Permissions&lt;/a&gt;&quot;</expression>
     </formulas>
     <formulas>
         <name>formula_systemPermLink</name>
         <dataType>String</dataType>
-        <expression>&quot;&lt;a style=\&quot;padding:5px\&quot; href=\&quot;/lightning/setup/PermissionSetListView/page?address=%2F&quot;&amp;{!PermissionSet.selectedChoiceValues}&amp;&quot;%2Fe%3Fs%3DSystemPermissions\&quot;&gt;Edit System Permissions&lt;/a&gt;&quot;</expression>
+        <expression
+    >&quot;&lt;a style=\&quot;padding:5px\&quot; href=\&quot;/lightning/setup/PermissionSetListView/page?address=%2F&quot;&amp;{!PermissionSet.selectedChoiceValues}&amp;&quot;%2Fe%3Fs%3DSystemPermissions\&quot;&gt;Edit System Permissions&lt;/a&gt;&quot;</expression>
     </formulas>
     <interviewLabel>Permset Quick Edit {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Permset Quick Edit</label>
@@ -140,9 +94,10 @@
         <label>Get Entity Defs</label>
         <locationX>176</locationX>
         <locationY>134</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Filter_Local</targetReference>
+            <targetReference>Select_Permset_And_Object</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -187,7 +142,7 @@
         <name>Select_Permset_And_Object</name>
         <label>Select Permset And Object</label>
         <locationX>176</locationX>
-        <locationY>458</locationY>
+        <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -203,14 +158,14 @@
                     <stringValue>Select a Permission Set</stringValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn
+      >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>Object</name>
-            <choiceReferences>collChoice_CustomObjects</choiceReferences>
-            <choiceReferences>collChoice_StandardObjects</choiceReferences>
+            <choiceReferences>collChoice_sObjects</choiceReferences>
             <extensionName>flowruntime:choiceLookup</extensionName>
             <fieldText>Object</fieldText>
             <fieldType>ComponentChoice</fieldType>
@@ -220,13 +175,15 @@
                     <stringValue>Select an Object</stringValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn
+      >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>disp_blank</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+      >&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -237,17 +194,20 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>disp_sobj</name>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;{!formula_SObjLink}&lt;/p&gt;</fieldText>
+                    <fieldText
+          >&lt;p style=&quot;text-align: center;&quot;&gt;{!formula_SObjLink}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <fields>
                     <name>disp_appPerm</name>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;{!formula_appAccess}&lt;/p&gt;</fieldText>
+                    <fieldText
+          >&lt;p style=&quot;text-align: center;&quot;&gt;{!formula_appAccess}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <fields>
                     <name>disp_apex</name>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;{!formula_apexAccess}&lt;/p&gt;</fieldText>
+                    <fieldText
+          >&lt;p style=&quot;text-align: center;&quot;&gt;{!formula_apexAccess}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
@@ -263,17 +223,20 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>disp_systemPerm</name>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;{!formula_systemPermLink}&lt;/p&gt;</fieldText>
+                    <fieldText
+          >&lt;p style=&quot;text-align: center;&quot;&gt;{!formula_systemPermLink}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <fields>
                     <name>disp_flow</name>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;{!formula_flowAccess}&lt;/p&gt;</fieldText>
+                    <fieldText
+          >&lt;p style=&quot;text-align: center;&quot;&gt;{!formula_flowAccess}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <fields>
                     <name>disp_customPerm</name>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;{!formula_customPermLink}&lt;/p&gt;</fieldText>
+                    <fieldText
+          >&lt;p style=&quot;text-align: center;&quot;&gt;{!formula_customPermLink}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
@@ -289,7 +252,8 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>PermissionSet.selectedChoiceValues</leftValueReference>
+                    <leftValueReference
+          >PermissionSet.selectedChoiceValues</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -309,7 +273,7 @@
     </start>
     <status>Active</status>
     <variables>
-        <name>currentItem_Filter_Custom</name>
+        <name>currentItem_Filter_Local</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -317,7 +281,7 @@
         <objectType>EntityDefinition</objectType>
     </variables>
     <variables>
-        <name>currentItem_Filter_Local</name>
+        <name>currentItem_Filter_Packaged</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
