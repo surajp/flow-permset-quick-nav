@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
+    <collectionProcessors>
+        <description
+    >These are part of packages and cannot be edited</description>
+        <name>Remove_Permsets_with_a_Namespace_Prefix</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Remove Permsets with a Namespace Prefix</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <assignNextValueToReference
+    >currentItem_Remove_Permsets_with_a_Namespace_Prefix</assignNextValueToReference>
+        <collectionProcessorType
+    >FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_Permission_Sets</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference
+      >currentItem_Remove_Permsets_with_a_Namespace_Prefix.NamespacePrefix</leftValueReference>
+            <operator>IsNull</operator>
+            <rightValue>
+                <booleanValue>true</booleanValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Select_Permset_And_Object</targetReference>
+        </connector>
+    </collectionProcessors>
     <dynamicChoiceSets>
         <name>choice_Permsets</name>
         <dataType>String</dataType>
@@ -20,6 +46,15 @@
                 <stringValue>Regular</stringValue>
             </value>
         </filters>
+        <object>PermissionSet</object>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>collChoice_Permsets</name>
+        <collectionReference
+    >Remove_Permsets_with_a_Namespace_Prefix</collectionReference>
+        <dataType>String</dataType>
+        <displayField>Label</displayField>
         <object>PermissionSet</object>
         <valueField>Id</valueField>
     </dynamicChoiceSets>
@@ -97,7 +132,7 @@
         <assignNullValuesIfNoRecordsFound
     >false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Select_Permset_And_Object</targetReference>
+            <targetReference>Get_Permission_Sets</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -138,17 +173,56 @@
         <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Permission_Sets</name>
+        <label>Get Permission Sets</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference
+      >Remove_Permsets_with_a_Namespace_Prefix</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IsCustom</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsOwnedByProfile</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Regular</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>PermissionSet</object>
+        <sortField>Name</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>Select_Permset_And_Object</name>
         <label>Select Permset And Object</label>
         <locationX>176</locationX>
-        <locationY>242</locationY>
+        <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>PermissionSet</name>
-            <choiceReferences>choice_Permsets</choiceReferences>
+            <choiceReferences>collChoice_Permsets</choiceReferences>
             <extensionName>flowruntime:choiceLookup</extensionName>
             <fieldText>Permission Set</fieldText>
             <fieldType>ComponentChoice</fieldType>
@@ -287,5 +361,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>EntityDefinition</objectType>
+    </variables>
+    <variables>
+        <name>currentItem_Remove_Permsets_with_a_Namespace_Prefix</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>PermissionSet</objectType>
     </variables>
 </Flow>
